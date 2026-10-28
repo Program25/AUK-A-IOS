@@ -1,0 +1,30 @@
+name: Gerar IPA (iPhone)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  ipa:
+    # Runner macOS com Xcode 26 (o Capacitor 8 exige Xcode 26).
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Versões
+        run: |
+          xcodebuild -version
+          swift --version
+          node -v
+      - run: npm install
+      - name: Teste dos textos do protocolo AUKA-PHONE/1
+        run: node tests/run-payload-check.mjs
+      - name: Compilar e empacotar o .ipa (sem assinatura)
+        run: node scripts/build-ios.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AUK-A-ipa
+          path: dist/*.ipa
