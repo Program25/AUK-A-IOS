@@ -1,0 +1,31 @@
+{
+  "name": "auk-a-ios",
+  "version": "1.4.0",
+  "description": "AUK-A — Configuração via Bluetooth (BLE) do computador de bordo e da estação em solo — app iPhone",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Niko",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build:web": "node scripts/build-web.mjs",
+    "ios:prepare": "node scripts/build-ios.mjs --prepare-only",
+    "ipa": "node scripts/build-ios.mjs",
+    "test:payload": "node tests/run-payload-check.mjs",
+    "open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor-community/bluetooth-le": "^8.2.0",
+    "@capacitor/core": "^8.4.0",
+    "@capacitor/filesystem": "^8.0.0",
+    "@capacitor/ios": "^8.4.0",
+    "@capacitor/share": "^8.0.0",
+    "auk-phone": "file:plugins/auk-phone"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.4.0",
+    "esbuild": "^0.25.0"
+  }
+}

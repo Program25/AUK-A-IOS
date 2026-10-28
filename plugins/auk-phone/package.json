@@ -1,0 +1,13 @@
+{
+  "name": "auk-phone",
+  "version": "1.0.0",
+  "description": "AUKA-PHONE/1 — o iPhone como periférico BLE que envia o GPS ao laptop",
+  "private": true,
+  "files": ["ios/Sources", "Package.swift"],
+  "capacitor": {
+    "ios": { "src": "ios" }
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0"
+  }
+}

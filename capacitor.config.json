@@ -1,0 +1,24 @@
+{
+  "appId": "com.kosmos.auka",
+  "appName": "AUK-A",
+  "webDir": "www",
+  "backgroundColor": "#252525",
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "style": "DARK"
+    },
+    "BluetoothLe": {
+      "displayStrings": {
+        "scanning": "Buscando...",
+        "cancel": "Cancelar",
+        "availableDevices": "Dispositivos disponíveis",
+        "noDeviceFound": "Nenhum dispositivo encontrado"
+      }
+    }
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#252525"
+  }
+}

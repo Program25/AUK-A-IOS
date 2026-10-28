@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#252525" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data: https://localhost; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self' 'unsafe-inline'">
+<title>Aplicativo_Unificado_Kosmos-Avionica</title>
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ================= ABAS ================= -->
+  <div id="tabBar">
+    <button class="tab-btn active" id="tabRocket">🚀 Foguete</button>
+    <button class="tab-btn" id="tabGround">📡 Estação em Solo</button>
+    <button class="tab-btn" id="tabPhone" style="display:none;">📱 Celular</button>
+  </div>
+
+  <!-- ================= PAINEL: FOGUETE ================= -->
+  <div class="panel" id="panelRocket">
+    <aside id="sidebar">
+      <div class="brand">
+        <img src="icons/icon-192.png" class="brand-icon" alt="logo">
+        <div class="brand-text">
+          <h1>AUK-A</h1>
+          <span class="subtitle">Computador de bordo · BLE</span>
+        </div>
+      </div>
+
+      <div class="conn-card">
+        <div class="conn-row">
+          <span class="dot" id="connDot"></span>
+          <span id="connLabel">Desconectado</span>
+        </div>
+
+        <button class="btn primary btn-block" id="btnConnect">Conectar ao foguete</button>
+        <button class="btn ghost btn-block" id="btnDisconnect" style="display:none;">Desconectar</button>
+        <button class="btn ghost btn-block" id="btnCancelScan" style="display:none;">Cancelar busca</button>
+
+        <p class="conn-error" id="connectError" style="display:none;"></p>
+      </div>
+
+      <div class="status-card" id="statusCard" style="display:none;">
+        <div class="row">
+          <span class="state" id="stState">—</span>
+          <span class="alt" id="stAlt">— m</span>
+        </div>
+        <div class="faults ok" id="stFaults">sensores OK</div>
+        <div class="unsaved" id="stUnsaved" style="display:none;">● alterações não salvas</div>
+      </div>
+
+      <div class="sd-card" id="sdCard">
+        <div class="sd-card-title">Cartão SD</div>
+        <div class="sd-progress" id="sdProgress" style="display:none;"></div>
+        <button class="btn ghost btn-block" id="btnDownloadSD" disabled>⬇️ Baixar dados (data.txt)</button>
+        <button class="btn danger btn-block" id="btnEraseSD" disabled>🗑️ Apagar cartão SD</button>
+      </div>
+
+      <nav id="groupNav" aria-label="Seções"></nav>
+
+      <div class="sidebar-footer">
+        <span class="muted small">App local · nenhum dado sai do seu dispositivo</span>
+      </div>
+    </aside>
+
+    <main id="mainPane">
+      <div id="main"><!-- grupos/campos são montados pelo app.js, já visíveis antes de conectar --></div>
+
+      <div id="actionBar">
+        <div class="toast" id="toast"></div>
+        <div class="row-btns">
+          <button class="btn" id="btnReload" disabled>Recarregar</button>
+          <button class="btn" id="btnDefaults" disabled>Padrões</button>
+          <button class="btn primary" id="btnSave" disabled>Salvar</button>
+        </div>
+        <button class="btn-arm" id="btnArm" disabled>🚀 Pronto para voar (salva e desliga o BT)</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= PAINEL: ESTAÇÃO EM SOLO ================= -->
+  <div class="panel" id="panelGround" style="display:none;">
+    <aside id="sidebarGs">
+      <div class="brand">
+        <img src="icons/icon-192.png" class="brand-icon" alt="logo">
+        <div class="brand-text">
+          <h1>AUK-A</h1>
+          <span class="subtitle">Estação em solo · BLE</span>
+        </div>
+      </div>
+
+      <div class="conn-card">
+        <div class="conn-row">
+          <span class="dot" id="connDotGs"></span>
+          <span id="connLabelGs">Desconectado</span>
+        </div>
+
+        <button class="btn primary btn-block" id="btnConnectGs">Conectar à ground station</button>
+        <button class="btn ghost btn-block" id="btnDisconnectGs" style="display:none;">Desconectar</button>
+        <button class="btn ghost btn-block" id="btnCancelScanGs" style="display:none;">Cancelar busca</button>
+
+        <p class="conn-error" id="connectErrorGs" style="display:none;"></p>
+      </div>
+
+      <div class="status-card" id="statusCardGs" style="display:none;">
+        <div class="row">
+          <span class="state" id="stStateGs">—</span>
+          <span class="alt" id="stAltGs">—</span>
+        </div>
+        <div class="unsaved" id="stUnsavedGs" style="display:none;">● alterações não salvas</div>
+      </div>
+
+      <nav id="groupNavGs" aria-label="Seções"></nav>
+
+      <div class="sidebar-footer">
+        <span class="muted small">App local · nenhum dado sai do seu dispositivo</span>
+      </div>
+    </aside>
+
+    <main id="mainPaneGs">
+      <div id="mainGs"><!-- grupos/campos são montados pelo app.js, já visíveis antes de conectar --></div>
+
+      <div id="actionBarGs">
+        <div class="toast" id="toastGs"></div>
+        <div class="row-btns">
+          <button class="btn" id="btnReloadGs" disabled>Recarregar</button>
+          <button class="btn" id="btnDefaultsGs" disabled>Padrões</button>
+          <button class="btn primary" id="btnSaveGs" disabled>Salvar</button>
+        </div>
+        <button class="btn danger btn-block" id="btnCloseBleGs" disabled>📡 Desligar Bluetooth</button>
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ================= PAINEL: CELULAR -> LAPTOP (só no app do celular) ================= -->
+  <div class="panel" id="panelPhone" style="display:none;">
+    <div id="phoneBody">
+      <section class="ph-card">
+        <div class="ph-head">
+          <div>
+            <h2>Enviar posição ao laptop</h2>
+            <p class="muted">O celular vira um sensor Bluetooth e manda o GPS dele para o AUK-A do laptop (aba Telemetria → 📱 Celular).</p>
+          </div>
+          <label class="switch" aria-label="Enviar posição ao laptop">
+            <input type="checkbox" id="phSwitch">
+            <span class="slider-track"></span>
+          </label>
+        </div>
+        <div class="ph-status">
+          <span class="dot" id="phDot"></span>
+          <span id="phStatus">Desligado</span>
+        </div>
+      </section>
+
+      <section class="ph-card" id="phWarnCard" style="display:none;"></section>
+
+      <section class="ph-card" id="phDataCard">
+        <div class="ph-grid">
+          <div><span class="ph-k">GPS</span><span class="ph-v" id="phGps">—</span></div>
+          <div><span class="ph-k">Precisão</span><span class="ph-v" id="phAcc">—</span></div>
+          <div class="ph-wide"><span class="ph-k">Posição</span><span class="ph-v" id="phPos">—</span></div>
+          <div><span class="ph-k">Altitude</span><span class="ph-v" id="phAlt">—</span></div>
+          <div><span class="ph-k">Envios</span><span class="ph-v" id="phSent">0</span></div>
+        </div>
+      </section>
+
+      <section class="ph-card">
+        <h3>Como usar</h3>
+        <ol class="ph-steps">
+          <li>Ligue o interruptor acima (o iPhone pede Localização e Bluetooth na primeira vez; em Localização escolha <b>Ao Usar o App</b> e deixe <b>Localização Precisa</b> ligada).</li>
+          <li>Com o AUK-A <b>aberto e a tela ligada</b>, no laptop abra o AUK-A → <b>Telemetria</b> → <b>📱 Celular</b> e escolha <b>AUKA-PHONE</b>.</li>
+          <li>Depois que o laptop conectar, pode bloquear a tela: o envio continua (aparece a barra azul de localização).</li>
+        </ol>
+        <p class="muted small">O iPhone só se deixa encontrar pelo laptop com o app aberto. Se a conexão cair com a tela bloqueada, abra o AUK-A de novo antes de reconectar. Posições com precisão pior que 20 m (comum dentro de prédios) são enviadas como “sem sinal”.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ================= CONFIRM MODAL (compartilhado pelas duas abas) ================= -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <h3 id="modalTitle">Confirmar</h3>
+      <p id="modalBody"></p>
+      <div class="row-btns">
+        <button class="btn ghost" id="modalCancel">Cancelar</button>
+        <button class="btn primary" id="modalConfirm">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DEVICE PICKER MODAL (compartilhado) ================= -->
+  <div class="modal-backdrop" id="devicePickerBackdrop">
+    <div class="modal">
+      <h3>Escolha o dispositivo</h3>
+      <p class="muted">Mais de um dispositivo Bluetooth compatível foi encontrado.</p>
+      <div id="deviceList" class="device-list"></div>
+      <div class="row-btns">
+        <button class="btn ghost" id="devicePickerCancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="native.js"></script>
+<script src="fields.js"></script>
+<script src="groundFields.js"></script>
+<script src="app.js"></script>
+<script src="phoneUI.js"></script>
+</body>
+</html>
